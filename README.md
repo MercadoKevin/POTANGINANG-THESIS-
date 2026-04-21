@@ -81,8 +81,6 @@ The live system captures frames from a webcam, preprocesses them, evaluates them
 - test under different distances and lighting conditions
 - compare webcam capture vs direct video capture device input
 
-## Consultation Positioning
-
 You can present this as:
 
 > A webcam-based real-time prototype for prohibited item screening that demonstrates the end-to-end pipeline for frame capture, preprocessing, inference, and alerting, with a modular architecture ready for CNN integration.

@@ -1,110 +1,88 @@
-# Automated Detection of Selected Prohibited Items in X-ray Baggage Images Using CNN
+# Real-Time Prohibited Item Detection Prototype (Webcam-Based)
 
-This project is a thesis prototype for detecting selected prohibited items from X-ray baggage images. The prototype is designed to run on a laptop connected to an existing X-ray monitor or using exported X-ray image files.
+This repository contains a prototype thesis system for **real-time prohibited item detection** using a **webcam pointed at an X-ray monitor**. The current implementation is a **demo-first proof of concept** designed for consultation, interface demonstration, and early pipeline validation.
 
-## Project Goal
-Build a CNN-based prototype that classifies X-ray baggage images into:
-- **Safe**
-- **Prohibited Item Detected**
+## Current Prototype Scope
 
-The system also includes a simple desktop alert interface for demonstration.
+The prototype currently supports:
+- webcam-based live frame capture
+- real-time frame preprocessing
+- demo suspicious-item detection using heuristic screening
+- alert overlay and audible alarm trigger
+- modular detector pipeline for future CNN integration
+- optional placeholder model loading path for trained classifiers
 
-## Proposed System Flow
-1. Capture or load an X-ray image.
-2. Preprocess the image.
-3. Pass the image to a CNN-based model.
-4. Predict whether a prohibited item is present.
-5. Show a visual alert and optional sound alert.
+## Why webcam input?
 
-## Current Scope
-This prototype is limited to a **binary classification** setup:
-- `safe`
-- `prohibited`
+Direct integration with the X-ray machine was not permitted. To keep the system non-invasive, low-cost, and feasible, the prototype uses a webcam to simulate real-time acquisition from the external X-ray monitor.
 
-Future versions may extend to specific object classes such as:
-- knives
-- scissors
-- cutters
-- metal tools
-- power banks
+## Important note
 
-## Folder Structure
-```
-xray_prohibited_detector/
-├── data/
-│   └── sample_placeholder/
+This prototype is **not yet a validated deployment-ready detector**. The current live demo uses a heuristic detector by default so that the full pipeline can be demonstrated even before a trained CNN model is finalized. A trained model can later be plugged into the same interface.
+
+## Project Structure
+
+```text
+xray_realtime_detector/
+├── assets/
 ├── docs/
-│   ├── consultation_notes.md
+│   ├── consultation_script.md
+│   ├── development_log.md
+│   ├── methodology.md
+│   ├── scope_and_limitations.md
 │   └── system_architecture.md
-├── models/
 ├── src/
+│   ├── app.py
 │   ├── config.py
+│   ├── detector.py
+│   ├── heuristic_detector.py
+│   ├── model_detector.py
 │   ├── train_model.py
-│   ├── predict_image.py
-│   ├── app_gui.py
 │   └── utils.py
 ├── requirements.txt
 └── README.md
 ```
 
-## Dataset Structure
-Create a dataset folder like this before training:
+## Quick Start
 
-```
-dataset/
-├── train/
-│   ├── safe/
-│   └── prohibited/
-├── val/
-│   ├── safe/
-│   └── prohibited/
-└── test/
-    ├── safe/
-    └── prohibited/
-```
+1. Install dependencies:
 
-## Recommended Public Datasets
-You can mention these during consultation:
-- GDXray
-- SIXray
-
-For an initial proof of concept, a smaller manually collected image set may also be used.
-
-## Installation
 ```bash
 pip install -r requirements.txt
 ```
 
-## Training
+2. Run the live demo:
+
 ```bash
-python src/train_model.py
+python src/app.py
 ```
 
-## Predicting a Single Image
-```bash
-python src/predict_image.py --image path/to/test_image.jpg
-```
+3. Press:
+- `q` to quit
+- `a` to toggle alarm on/off
+- `h` to switch to heuristic mode
+- `m` to switch to model mode (if a trained model exists)
 
-## Running the Demo App
-```bash
-python src/app_gui.py
-```
+## Demo Logic
 
-## Method Used
-- Transfer learning with **MobileNetV2**
-- Binary classification output
-- Visual alert based on prediction score
+The live system captures frames from a webcam, preprocesses them, evaluates them using the active detector, and then displays:
+- detector status
+- confidence score
+- current mode
+- live bounding cue over suspicious central region
+- audible alarm when the suspicious score exceeds the threshold
 
-## Evaluation Metrics
-- Accuracy
-- Precision
-- Recall
-- F1-score
-- Confusion matrix
+## Planned Next Steps
 
-## Next Improvements
-- collect more X-ray images
-- train on a larger balanced dataset
-- move from image classification to object detection
-- integrate monitor capture pipeline
-- improve alarm and logging
+- collect or curate X-ray image dataset
+- fine-tune a CNN using transfer learning
+- calibrate thresholding for live monitor conditions
+- improve suspicious region localization
+- test under different distances and lighting conditions
+- compare webcam capture vs direct video capture device input
+
+## Consultation Positioning
+
+You can present this as:
+
+> A webcam-based real-time prototype for prohibited item screening that demonstrates the end-to-end pipeline for frame capture, preprocessing, inference, and alerting, with a modular architecture ready for CNN integration.

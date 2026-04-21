@@ -1,21 +1,32 @@
-"""Configuration settings for the X-ray prohibited item detector prototype."""
+"""Configuration values for the real-time prohibited item detection prototype."""
 
-from pathlib import Path
+CAMERA_INDEX = 0
+FRAME_WIDTH = 960
+FRAME_HEIGHT = 540
+WINDOW_NAME = "Real-Time Prohibited Item Detection Prototype"
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DATASET_DIR = BASE_DIR / "dataset"
-MODEL_DIR = BASE_DIR / "models"
-MODEL_DIR.mkdir(parents=True, exist_ok=True)
+# Demo detector parameters
+SUSPICION_THRESHOLD = 0.58
+DARK_PIXEL_THRESHOLD = 85
+EDGE_THRESHOLD_LOW = 70
+EDGE_THRESHOLD_HIGH = 160
+MORPH_KERNEL_SIZE = 5
 
-TRAIN_DIR = DATASET_DIR / "train"
-VAL_DIR = DATASET_DIR / "val"
-TEST_DIR = DATASET_DIR / "test"
+# Region of interest where the X-ray monitor is expected to appear more prominently.
+ROI_X_RATIO = 0.18
+ROI_Y_RATIO = 0.12
+ROI_W_RATIO = 0.64
+ROI_H_RATIO = 0.72
 
-MODEL_PATH = MODEL_DIR / "xray_cnn_model.keras"
-CLASS_NAMES = ["prohibited", "safe"]
+# Alarm settings
+ENABLE_BEEP = True
+BEEP_COOLDOWN_SECONDS = 2.0
 
-IMAGE_SIZE = (224, 224)
-BATCH_SIZE = 16
-EPOCHS = 5
-LEARNING_RATE = 1e-4
-THRESHOLD = 0.50
+# Overlay colors in BGR
+COLOR_SAFE = (60, 180, 75)
+COLOR_ALERT = (0, 0, 255)
+COLOR_INFO = (255, 255, 255)
+COLOR_BOX = (0, 255, 255)
+
+# Model integration path
+MODEL_PATH = "models/prohibited_item_model.onnx"

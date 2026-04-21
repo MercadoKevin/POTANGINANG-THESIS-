@@ -1,45 +1,47 @@
 # System Architecture
 
-## High-Level Flow
-1. X-ray monitor or stored X-ray image provides image input.
-2. Laptop-based application receives image.
-3. Image is resized and normalized.
-4. CNN model predicts the probability of a prohibited item.
-5. System displays result and triggers alert if needed.
+## Overview
 
-## IPO Model
-### Input
-- X-ray baggage image
+The proposed system is a webcam-based real-time prohibited item detection prototype for X-ray monitor screening. It is composed of four major modules:
 
-### Process
-- image preprocessing
-- CNN-based classification
-- threshold-based decision logic
+1. **Image Acquisition Module**
+   - captures live frames using a webcam
+   - positions the camera toward the external X-ray monitor
+   - provides non-invasive real-time input
 
-### Output
-- safe bag label
-- prohibited item detected label
-- alert notification
+2. **Preprocessing Module**
+   - frame resizing
+   - grayscale preparation
+   - region-of-interest extraction
+   - edge and density enhancement
 
-## Modules
-### 1. Image Acquisition Module
-Loads a bag image from file or future monitor-capture source.
+3. **Detection Module**
+   - current stage: heuristic suspicious-pattern screening
+   - future stage: CNN-based prohibited item classifier or detector
+   - threshold-based decision logic
 
-### 2. Preprocessing Module
-Resizes image to 224x224 and normalizes pixel values.
+4. **Alert and Display Module**
+   - displays live feed
+   - overlays status, confidence, and detection box
+   - triggers audible alert when suspicion threshold is exceeded
 
-### 3. Detection Module
-Runs the CNN-based classifier.
+## Architecture Flow
 
-### 4. Alert Module
-Displays a warning and triggers a bell sound for suspicious images.
+```text
+External X-ray Monitor
+        ↓
+Webcam Capture
+        ↓
+Frame Preprocessing
+        ↓
+Detector Engine
+(Heuristic now / CNN later)
+        ↓
+Decision Thresholding
+        ↓
+Live Overlay + Alarm
+```
 
-### 5. Evaluation Module
-Stores training history and classification metrics.
+## Deployment Rationale
 
-## Future Improvement Path
-- real monitor feed capture
-- dataset expansion
-- prohibited item multiclass detection
-- bounding-box object detection
-- database logging of alerts
+The design avoids direct modification of the X-ray machine. This makes the prototype safer, lower-cost, and easier to deploy for early experimentation.

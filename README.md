@@ -102,9 +102,6 @@ python src/app_gui.py
 - F1-score
 - Confusion matrix
 
-## Thesis Positioning
-This system is intended as an **AI-assisted screening prototype** and **not a replacement for human inspection**.
-
 ## Next Improvements
 - collect more X-ray images
 - train on a larger balanced dataset
